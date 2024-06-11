@@ -14,22 +14,12 @@
 <!--- banner-->
   <div class="bannerimage">
     <div class="bannertext">
-      <h1>Mobilität in Zürich während COVID-19  </h1>
+      <h1>Intersection Index</h1>
     </div>
   </div>
 
 <!-- introtext -->
-<div id='headtext'>
-Diese Karte stellt die Frequenz von Fussgängern und Velofahrern an verschiedenen automatischen Zählstationen in der Stadt Zürich im Jahr 2020
-dar. Sie wurden in verschiedenen Intervallen gezählt, zum Zweck dieser Darstellung aber auf ganze Wochenzahlen
-aufsummiert. Ziel ist ein Überblick über die Frequenz des Individualverkehrs in Hinblick auf das Verhalten während verchiedener Massnahmen zur Eindämmung der COVID-19-Pandemie.
- Die Darstellung erlaubt die Auswahl von Kalenderwochen und Verkehrsmodus und informiert jeweils kurz über den aktuellen Massnahmenkatalog in der Stadt Zürich. Die Symbole geben die exakten Zahlenwerte wieder, wenn angeklickt.
-<br><br>Die Werte basieren auf automatisierten Zählungen durch die Stadt Zürich, die von ebenjener auf statistische Fehlerquellen hin geprüft und korrigiert wurden. Es besteht kein Anspruch auf Vollständigkeit oder Gültigkeit der publizierten Daten seitens des Autors dieser Darstellung. ACHTUNG: Diese Karte wurde modifiziert und zeigt aus Darstellungsgründen nur noch die Modi Fussgänger und Velofahrer. Die ursprüngliche Version mit MIV ist <a href=https://bountan.github.io/COVIDMobilityFull/>hier</a> einsehbar.
-<br><br>Datengrundlagen, Datenaufarbeitung und Dokumentation: <a href= 'https://github.com/bountan/mobilitycovid' target="_blank">GitHub</a>
-<br>Datenherkunft: Open Data Stadt Zürich <a href='https://data.stadt-zuerich.ch/dataset/sid_dav_verkehrszaehlung_miv_od2031/resource/44607195-a2ad-4f9b-b6f1-d26c003d85a2' target="_blank">Verkehrszählung MIV</a>, <a href='https://data.stadt-zuerich.ch/dataset/ted_taz_verkehrszaehlungen_werte_fussgaenger_velo/resource/b9308f85-9066-4f5b-8eab-344c790a6982' target="_blank">Verkehrszählung Fussgänger und Veloverkehr</a>
-<br>Kontakt Autor: Ueli Isenschmid&nbsp;&nbsp;<a href='mailto:ueli.isenschmid@gmail.com'>Email</a>, <a href='https://www.linkedin.com/in/ueli-isenschmid/' target="_blank">Linkedin</a>
 
-  </div>
 
 <!--- map object-->
 
@@ -38,7 +28,7 @@ aufsummiert. Ziel ist ein Überblick über die Frequenz des Individualverkehrs i
 <!-- console controls -->
 <div id='console'>
 
-<!-- legend -->
+<!-- legend 
   <div class='session'>
     <h2>Total Zählungen</h2>
     <div class='row colors'></div>
@@ -52,8 +42,9 @@ aufsummiert. Ziel ist ein Überblick über die Frequenz des Individualverkehrs i
   </div>
 
 
+-->
 
-<!-- slider modetime -->
+<!-- slider modetime
     <div class='session' id='sliderbar'><br>
 <h2 class = 'paddingtop'>Kalenderwoche: <label id='active-week' >1</label></h2>
 <h2 class = 'paddingtop'><label id='lockdownstat' >‏‏‎ ‎‎</label></h2>
@@ -62,7 +53,6 @@ aufsummiert. Ziel ist ein Überblick über die Frequenz des Individualverkehrs i
 </div>
   </div>
 
-<!-- buttons weekmode kind -->
   <div class='session'>
     <h2>Verkehrsmodus</h2>
     <div class='row' id='filters'>
@@ -74,6 +64,9 @@ aufsummiert. Ziel ist ein Überblick über die Frequenz des Individualverkehrs i
   </div>
 
 </div>
+-->
+
+
 
 <!-- map controls -->
 <script>
@@ -90,6 +83,7 @@ aufsummiert. Ziel ist ein Überblick über die Frequenz des Individualverkehrs i
       maxBounds: [[8.332501, 47.300210], [8.714815, 47.461794]]
     });
 
+
 // map controls
     var scale = new mapboxgl.ScaleControl({
     maxWidth: 200,
@@ -100,154 +94,116 @@ aufsummiert. Ziel ist ein Überblick über die Frequenz des Individualverkehrs i
     map.addControl(new mapboxgl.FullscreenControl());
 
 // load map
-map.on('load', function() {
+//map.on('load', function() {
 
 // variables filter what to display
-  var filterWeek = ['==', ['get', 'wk'], 1];
-  var filterMode = ['==', ['get', 'kind'], 1];
-  var modetext = "Fussgänger"
+//  var filterWeek = ['==', ['get', 'wk'], 1];
+//  var filterMode = ['==', ['get', 'kind'], 1];
+//  var modetext = "Fussgänger"
 
 // add sections of traffic layer
   map.addLayer
 
 //listener for slider change
-  document.getElementById('slider').addEventListener('input', function(e) {
-  var week = parseInt(e.target.value);
+  //document.getElementById('slider').addEventListener('input', function(e) {
+  //var week = parseInt(e.target.value);
 
 
 
 
-  filterWeek = ["==", ['get', 'wk'], week]
+  //filterWeek = ["==", ['get', 'wk'], week]
 
-  map.setFilter('location', ['all', filterWeek, filterMode]
-  );
+  //map.setFilter('location', ['all', filterWeek, filterMode]
+  //);
 
   // update text in the UI
   document.getElementById('active-week').innerText = week;
 
 
-  if (week < 12){
-      lockdown = "‏‏‎ ‎"
-    } else if (week < 20) {
-      lockdown = "Lockdown 16. März"
-    } else if (week < 28) {
-      lockdown = "Aufgehoben 11. Mai"
-    } else if (week < 43) {
-      lockdown = "Maskenpflicht 6. Juli"
-    } else {
-      lockdown = "Zweite Welle 19. Oktober"
-    }
-
-document.getElementById('lockdownstat').innerText = lockdown;
-});
+//  if (week < 12){
+//      lockdown = "‏‏‎ ‎"
+//    } else if (week < 20) {
+//      lockdown = "Lockdown 16. März"
+//    } else if (week < 28) {
+//      lockdown = "Aufgehoben 11. Mai"
+//    } else if (week < 43) {
+//      lockdown = "Maskenpflicht 6. Juli"
+//    } else {
+//      lockdown = "Zweite Welle 19. Oktober"
+//    }
+//
+//document.getElementById('lockdownstat').innerText = lockdown;
+//});
 
 
 // listener for button change
 
-document.getElementById('filters').addEventListener('change', function(e) {
-  var mode = parseInt(e.target.value);
-  if (mode == 1){
-    modetext = "Fussgänger"
-  } else if (mode == 2) {
-    modetext = "Velofahrer"
-  } else if (mode == 3){
-    modetext = "motorisierte Fahrzeuge"
-  }
-  else{
-    modetext = ""
-  }
+//document.getElementById('filters').addEventListener('change', function(e) {
+//  var mode = parseInt(e.target.value);
+//  if (mode == 1){
+//    modetext = "Fussgänger"
+//  } else if (mode == 2) {
+//    modetext = "Velofahrer"
+//  } else if (mode == 3){
+//    modetext = "motorisierte Fahrzeuge"
+//  }
+//  else{
+//    modetext = ""
+//  }
 
 
 
 
 
 
-  filterMode = ["==", ['get', 'kind'], mode]
-  map.setFilter('location', ['all', filterWeek, filterMode]);
-});
+//  filterMode = ["==", ['get', 'kind'], mode]
+//  map.setFilter('location', ['all', filterWeek, filterMode]);
+//});
 
-//layer location, pretty static layer
+// Add a layer to display the polygons
 map.addLayer({
-  id: 'location',
-  type: 'circle',
-  source: {
-    type: 'geojson',
-    data: 'https://bountan.github.io/mobilitycovid/data/zuri.geojson'
-    },
-
+  id: 'intersections-layer',
+  type: 'fill',
+  source: 'https://bountan.github.io/mobilitycovid/data/intersections.geojson',
+  layout: {},
   paint: {
-    'circle-color': [
-    'step',
-    ['get', 'n'],
-    '#2d8ac0', 200,
-    '#559783', 500,
-    '#add8a4', 1000,
-    '#e4ea9a', 2000,
-    '#fae08a', 10000,
-    '#f9ae60', 35000,
-    '#f26b44', 50000,
-    '#d83d51'
-    ],
-
-    'circle-radius': [
-      'interpolate', ['linear'], ['zoom'],
-        11, ['/',   ['step',
-              ['get', 'n'],
-
-              2, 200,
-              4, 500,
-              6, 1000,
-              10, 2000,
-              12, 10000,
-              16, 35000,
-              20, 50000,
-              25
-            ], 2],
-        13, ['/', ['step',
-              ['get', 'n'],
-
-              2, 200,
-              4, 500,
-              6, 1000,
-              10, 2000,
-              12, 10000,
-              16, 35000,
-              20, 50000,
-              25
-            ], 0.7],
-            15, ['/',   ['step',
-                  ['get', 'n'],
-                  2, 200,
-                  4, 500,
-                  6, 1000,
-                  10, 2000,
-                  12, 10000,
-                  16, 35000,
-                  20, 50000,
-                  25
-                ], 0.3],
-      ],
-
-}
-});
-// popup stops
-map.on('click', 'location', function(e) {
-new mapboxgl.Popup()
-.setLngLat(e.lngLat)
-.setHTML("Total "+modetext+" in Kalenderwoche "+e.features[0].properties.wk+": <b>"+e.features[0].properties.n+"</b>")
-.addTo(map);
-});
-// change cursor on hover sections
-// change cursor on hover stops
-map.on('mouseenter', 'location', function() {
-map.getCanvas().style.cursor = 'pointer';
+    'fill-color': 'rgba(255, 0, 255, 0.5)', // Magenta color with 50% opacity
+    'fill-outline-color': 'rgba(255, 0, 255, 1)' // Magenta outline
+  }
 });
 
-// change cursor back stops
-map.on('mouseleave', 'location', function() {
-map.getCanvas().style.cursor = '';
+// Add a click event listener to show popups with the "id" attribute
+map.on('click', 'intersections-layer', function(e) {
+  new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.id)
+    .addTo(map);
 });
-});
+
+////layer location, pretty static layer
+//map.addLayer({
+//  id: 'id',
+//  type: 'polygon',
+//  source: {
+//    type: 'geojson',
+//    data: 'https://bountan.github.io/mobilitycovid/data/intersections.geojson'
+//    },
+//
+//  paint: {
+//    'circle-color': 'red'
+//
+//
+//}
+//});
+//
+//// popup stops
+//map.on('click', 'location', function(e) {
+//new mapboxgl.Popup()
+//.setLngLat(e.lngLat)
+//.setHTML(e.features[0].properties.id)
+//.addTo(map);
+//});
+
 
 </script>
 
