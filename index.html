@@ -84,129 +84,45 @@
     });
 
 
-// map controls
-    var scale = new mapboxgl.ScaleControl({
-    maxWidth: 200,
-    unit: 'metric'
+    map.on('load', function() {
+      // Add GeoJSON data as a source
+      map.addSource('intersections', {
+        type: 'geojson',
+        data: 'https://bountan.github.io/intersections/data/intersections.geojson'
+      });
+
+      // Add a layer to display the polygons
+      map.addLayer({
+        id: 'intersections-layer',
+        type: 'fill',
+        source: 'intersections',
+        layout: {},
+        paint: {
+          'fill-color': 'rgba(255, 0, 255, 0.5)', // Magenta color with 50% opacity
+          'fill-outline-color': 'rgba(255, 0, 255, 1)' // Magenta outline
+        }
+      });
+
+      // Add a click event listener to show popups with the "id" attribute
+      map.on('click', 'intersections-layer', function(e) {
+        if (e.features.length > 0) {
+          new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.id)
+            .addTo(map);
+        }
+      });
+
+      // Change the cursor to a pointer when the mouse is over the polygons
+      map.on('mouseenter', 'intersections-layer', function() {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+
+      // Change it back when it leaves
+      map.on('mouseleave', 'intersections-layer', function() {
+        map.getCanvas().style.cursor = '';
+      });
     });
-    map.addControl(scale);
-
-    map.addControl(new mapboxgl.FullscreenControl());
-
-// load map
-//map.on('load', function() {
-
-// variables filter what to display
-//  var filterWeek = ['==', ['get', 'wk'], 1];
-//  var filterMode = ['==', ['get', 'kind'], 1];
-//  var modetext = "Fussgänger"
-
-// add sections of traffic layer
-  map.addLayer
-
-//listener for slider change
-  //document.getElementById('slider').addEventListener('input', function(e) {
-  //var week = parseInt(e.target.value);
-
-
-
-
-  //filterWeek = ["==", ['get', 'wk'], week]
-
-  //map.setFilter('location', ['all', filterWeek, filterMode]
-  //);
-
-  // update text in the UI
-  document.getElementById('active-week').innerText = week;
-
-
-//  if (week < 12){
-//      lockdown = "‏‏‎ ‎"
-//    } else if (week < 20) {
-//      lockdown = "Lockdown 16. März"
-//    } else if (week < 28) {
-//      lockdown = "Aufgehoben 11. Mai"
-//    } else if (week < 43) {
-//      lockdown = "Maskenpflicht 6. Juli"
-//    } else {
-//      lockdown = "Zweite Welle 19. Oktober"
-//    }
-//
-//document.getElementById('lockdownstat').innerText = lockdown;
-//});
-
-
-// listener for button change
-
-//document.getElementById('filters').addEventListener('change', function(e) {
-//  var mode = parseInt(e.target.value);
-//  if (mode == 1){
-//    modetext = "Fussgänger"
-//  } else if (mode == 2) {
-//    modetext = "Velofahrer"
-//  } else if (mode == 3){
-//    modetext = "motorisierte Fahrzeuge"
-//  }
-//  else{
-//    modetext = ""
-//  }
-
-
-
-
-
-
-//  filterMode = ["==", ['get', 'kind'], mode]
-//  map.setFilter('location', ['all', filterWeek, filterMode]);
-//});
-
-// Add a layer to display the polygons
-map.addLayer({
-  id: 'intersections-layer',
-  type: 'fill',
-  source: 'https://bountan.github.io/mobilitycovid/data/intersections.geojson',
-  layout: {},
-  paint: {
-    'fill-color': 'rgba(255, 0, 255, 0.5)', // Magenta color with 50% opacity
-    'fill-outline-color': 'rgba(255, 0, 255, 1)' // Magenta outline
-  }
-});
-
-// Add a click event listener to show popups with the "id" attribute
-map.on('click', 'intersections-layer', function(e) {
-  new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(e.features[0].properties.id)
-    .addTo(map);
-});
-
-////layer location, pretty static layer
-//map.addLayer({
-//  id: 'id',
-//  type: 'polygon',
-//  source: {
-//    type: 'geojson',
-//    data: 'https://bountan.github.io/mobilitycovid/data/intersections.geojson'
-//    },
-//
-//  paint: {
-//    'circle-color': 'red'
-//
-//
-//}
-//});
-//
-//// popup stops
-//map.on('click', 'location', function(e) {
-//new mapboxgl.Popup()
-//.setLngLat(e.lngLat)
-//.setHTML(e.features[0].properties.id)
-//.addTo(map);
-//});
-
-
-</script>
-
+  </script>
 </body>
-
 </html>
